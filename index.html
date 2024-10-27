@@ -401,6 +401,10 @@ $('#edit-submit').on("click", function() {
     if(search == "") {
       $('#error-message').html("Search field required.").slideDown();
       $('#success-message').slideUp();
+
+      setTimeout(function() {
+        $('#error-message').slideUp();
+      }, 3000); // Hide error message after 3 seconds
     } else {
       $('#error-message').slideUp();
       var obj = { search: search };
@@ -415,9 +419,17 @@ $('#edit-submit').on("click", function() {
             $('#error-message').html(data.message).slideDown();
             $('#success-message').slideUp();
             $('#load-table').empty();
+
+            setTimeout(function() {
+              $('#error-message').slideUp();
+            }, 3000); // Hide error message after 3 seconds
           } else {
             $('#success-message').html(data.message).slideDown();
             $('#error-message').slideUp();
+
+            setTimeout(function() {
+              $('#success-message').slideUp();
+            }, 3000); // Hide success message after 3 seconds
             $('#load-table').empty();
             $.each(data, function(i, item) {
               $('#load-table').append('<tr><td class="center">'
