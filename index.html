@@ -1,454 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>PHP & Ajax CRUD</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <table id="main" border="0" cellspacing="0">
-    <tr>
-      <td id="top" colspan="2">
-        <marquee behavior=""><h1>
-          PHP & Ajax CRUD Application with JSON API
-        </h1></marquee>
-      </td>
-    </tr>
-    <tr>
-      <td id="header">
-        <h1><a href="/" style="text-decoration: none;">Home</a></h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>PHP & Ajax CRUD</title>
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+    <body>
+        <table id="main" border="0" cellspacing="0">
+            <tr>
+                <td id="top" colspan="2">
+                    <marquee behavior="">
+                        <h1>
+                            PHP & Ajax CRUD Application with JSON API
+                        </h1>
+                    </marquee>
+                </td>
+            </tr>
+            <tr>
+                <td id="header">
+                    <h1><a href="/" style="text-decoration: none;">Home</a></h1>
 
-        <form action="#" id="search-form">
-          <div id="search-bar">
-            <label>Search :</label>
-            <input type="text" id="search" autocomplete="off">
-            
-          <button type="button" id="search-btn">
-            Search
-          </button>
-          </div>
-        </form>
-      </td>
-    </tr>
-    <tr>
-      <td id="table-form">
-        <button id="add-btn">Add New</button>
-      </td>
-    </tr>
-    <tr>
-      <td id="table-data">
-        <table width="100%" cellpadding="10px" >
-          <tr>
-            <th width="40px">Id</th>
-            <th>Name</th>
-            <th width="50px">Email</th>
-            <th width="150px">Address</th>
-            <th width="150px">Phone</th>
-            <th width="150px">Password</th>
-            <th width="60px">Edit</th>
-            <th width="70px">Delete</th>
-          </tr>
-          <tbody id="load-table">
-          </tbody>
+                    <form action="#" id="search-form">
+                        <div id="search-bar">
+                            <label>Search :</label>
+                            <input type="text" id="search" autocomplete="off" />
+
+                            <button type="button" id="search-btn">
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td id="table-form">
+                    <button id="add-btn">Add New</button>
+                </td>
+            </tr>
+            <tr>
+                <td id="table-data">
+                    <table width="100%" cellpadding="10px">
+                        <tr>
+                            <th width="40px">Id</th>
+                            <th>Name</th>
+                            <th width="50px">Email</th>
+                            <th width="150px">Address</th>
+                            <th width="150px">Phone</th>
+                            <th width="150px">Password</th>
+                            <th width="60px">Edit</th>
+                            <th width="70px">Delete</th>
+                        </tr>
+                        <tbody id="load-table"></tbody>
+                    </table>
+                </td>
+            </tr>
         </table>
-      </td>
-    </tr>
-  </table>
 
-  <div id="error-message" class="messages"></div>
-  <div id="success-message" class="messages"></div>
+        <div id="error-message" class="messages"></div>
+        <div id="success-message" class="messages"></div>
 
+        <!-- Popup Modal Box for Add the Records -->
+        <div id="add-record-modal">
+            <div id="modal-form-add">
+                <h2>Add Form</h2>
+                <form action="" id="add-form">
+                    <table cellpadding="10px" width="100%">
+                        <tr>
+                            <td width="90px">Name</td>
+                            <td><input type="text" name="name" id="name" /></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><input type="email" name="email" id="email" /></td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td><input type="text" name="address" id="address" /></td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td><input type="text" name="phone" id="phone" /></td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td><input type="text" name="password" id="password" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="button" id="add-submit" value="Save" /></td>
+                        </tr>
+                    </table>
+                </form>
+                <div id="add-record-close-btn">X</div>
+            </div>
+        </div>
 
-  <!-- Popup Modal Box for Add the Records -->
-  <div id="add-record-modal">
-    <div id="modal-form-add">
-      <h2>Add Form</h2>
-      <form action="" id="add-form">
-      <table cellpadding="10px" width="100%">
-        <tr>
-          <td width="90px">Name</td>
-          <td><input type="text" name="name" id="name"></td>
-        </tr>
-        <tr>
-          <td>Email</td>
-          <td><input type="email" name="email" id="email"></td>
-        </tr>
-        <tr>
-          <td>Address </td>
-          <td><input type="text" name="address" id="address"></td>
-        </tr>
-        <tr>
-          <td>Phone </td>
-          <td><input type="text" name="phone" id="phone"></td>
-        </tr>
-        <tr>
-          <td>Password </td>
-          <td><input type="text" name="password" id="password"></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><input type="button" id="add-submit" value="Save"></td>
-        </tr>
-      </table>
-      </form>
-      <div id="add-record-close-btn">X</div>
-    </div>
-  </div>
+        <!-- Popup Modal Box for Update the Records -->
+        <div id="modal">
+            <div id="modal-form">
+                <h2>Edit Form</h2>
+                <form action="" id="edit-form">
+                    <table cellpadding="10px" width="100%">
+                        <tr>
+                            <td width="90px">Name</td>
+                            <td>
+                                <input type="text" name="name" id="edit-name" required />
+                                <input type="text" name="user_id" id="edit-id" hidden />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><input type="email" name="email" id="edit-email" required /></td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td><input type="text" name="address" id="edit-address" required /></td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td><input type="text" name="phone" id="edit-phone" required /></td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td><input type="text" name="password" id="edit-password" required /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="button" id="edit-submit" value="Update" /></td>
+                        </tr>
+                    </table>
+                </form>
 
+                <div id="error-message" style="display: none; color: red;"></div>
+                <div id="success-message" style="display: none; color: green;"></div>
+                <div id="close-btn">X</div>
+            </div>
+        </div>
 
-  <!-- Popup Modal Box for Update the Records -->
-  <div id="modal">
-    <div id="modal-form">
-      <h2>Edit Form</h2>
-      <form action="" id="edit-form">
-        <table cellpadding="10px" width="100%">
-          <tr>
-            <td width="90px">Name</td>
-            <td>
-              <input type="text" name="name" id="edit-name" required>
-              <input type="text" name="user_id" id="edit-id" hidden>
-            </td>
-          </tr>
-          <tr>
-            <td>Email</td>
-            <td><input type="email" name="email" id="edit-email" required></td>
-          </tr>
-          <tr>
-            <td>Address</td>
-            <td><input type="text" name="address" id="edit-address" required></td>
-          </tr>
-          <tr>
-            <td>Phone</td>
-            <td><input type="text" name="phone" id="edit-phone" required></td>
-          </tr>
-          <tr>
-            <td>Password</td>
-            <td><input type="text" name="password" id="edit-password" required></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td><input type="button" id="edit-submit" value="Update"></td>
-          </tr>
-        </table>
-      </form>
-      
-      <div id="error-message" style="display:none; color:red;"></div>
-      <div id="success-message" style="display:none; color:green;"></div>
-      <div id="close-btn">X</div>
-    </div>
-  </div>
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript">
-  
-  $(document).ready(function() {
-
-// Fetch All Records
-function loadTable() {
-    $.ajax({
-        url: "http://api.test/api-fetch-all.php",
-        type: "GET",
-        success: function(data) {
-          
-          if(data.status == false) {
-            $('#load-table').append('<tr><td colspan="6" style="color:red;"><h2>'+data.message+'</h2></td></tr>');
-          } else {
-
-            $.each(data, function(i, item) {
-              $('#load-table').append('<tr><td class="center">'
-                +data[i].id+'</td><td>'+data[i].full_name+
-                  '</td><td>'+data[i].email+'</td><td>'+data[i].address+'</td><td>'+data[i].phone+'</td><td>'+data[i].password+
-
-                    '</td><td class="center"><button class="edit-btn" data-eid="'
-                      +data[i].id+'">Edit</button></td><td class="center"><button class="delete-btn" data-id="'
-                        +data[i].id+'">Delete</button></td></tr>');
-            });
-
-          }
-
-        }
-    });
-}
-
-loadTable();
-
-
-  //Insert New Record
-
-  $('#add-submit').on("click", function() {
-    var name = $('#name').val();
-    var email = $('#email').val();
-    var address = $('#address').val();
-    var phone = $('#phone').val();
-    var password = $('#password').val();
-
-    // Check if all fields are filled
-    if (name === "" || email === "" || address === "" || phone === "" || password === "") {
-        $('#error-message').html("All fields are required.").slideDown();
-        $('#success-message').slideUp();
-
-        setTimeout(function() {
-            $('#error-message').slideUp();
-        }, 3000); // Hide error message after 3 seconds
-
-    } else {
-        $('#error-message').slideUp();
-        var obj = { full_name: name, email: email, address: address, phone: phone, password: password };
-        var myJSON = JSON.stringify(obj);
-
-        $.ajax({
-            url: "http://api.test/api-insert.php",
-            type: "POST",
-            contentType: "application/json", // Specify that we are sending JSON
-            data: myJSON,
-            success: function(data) {
-                if (data.status === false) {
-                    $('#error-message').html(data.message).slideDown();
-                    $('#success-message').slideUp();
-
-                    setTimeout(function() {
-                        $('#error-message').slideUp();
-                    }, 3000); // Hide error message after 3 seconds
-
-                } else {
-                    $('#success-message').html(data.message).slideDown();
-                    $('#error-message').slideUp();
-                    $('#add-form').trigger("reset");
-                    $('#load-table').empty();
-                    loadTable();
-
-                    // Hide success message after 3 seconds
-                    setTimeout(function() {
-                        $('#success-message').slideUp();
-                    }, 3000);
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // Fetch All Records
+                function loadTable() {
+                    $.ajax({
+                        url: "http://api.test/api-fetch-all.php",
+                        type: "GET",
+                        success: function (data) {
+                            if (data.status == false) {
+                                $("#load-table").append('<tr><td colspan="6" style="color:red;"><h2>' + data.message + "</h2></td></tr>");
+                            } else {
+                                $.each(data, function (i, item) {
+                                    $("#load-table").append(
+                                        '<tr><td class="center">' +
+                                            data[i].id +
+                                            "</td><td>" +
+                                            data[i].full_name +
+                                            "</td><td>" +
+                                            data[i].email +
+                                            "</td><td>" +
+                                            data[i].address +
+                                            "</td><td>" +
+                                            data[i].phone +
+                                            "</td><td>" +
+                                            data[i].password +
+                                            '</td><td class="center"><button class="edit-btn" data-eid="' +
+                                            data[i].id +
+                                            '">Edit</button></td><td class="center"><button class="delete-btn" data-id="' +
+                                            data[i].id +
+                                            '">Delete</button></td></tr>'
+                                    );
+                                });
+                            }
+                        },
+                    });
                 }
-            }
-        });
-    }
-});
 
+                loadTable();
 
+                //Insert New Record
 
+                $("#add-submit").on("click", function () {
+                    var name = $("#name").val();
+                    var email = $("#email").val();
+                    var address = $("#address").val();
+                    var phone = $("#phone").val();
+                    var password = $("#password").val();
 
+                    // Check if all fields are filled
+                    if (name === "" || email === "" || address === "" || phone === "" || password === "") {
+                        $("#error-message").html("All fields are required.").slideDown();
+                        $("#success-message").slideUp();
 
-  //Delete Record
+                        setTimeout(function () {
+                            $("#error-message").slideUp();
+                        }, 3000); // Hide error message after 3 seconds
+                    } else {
+                        $("#error-message").slideUp();
+                        var obj = { full_name: name, email: email, address: address, phone: phone, password: password };
+                        var myJSON = JSON.stringify(obj);
 
-  $(document).on("click", ".delete-btn", function() {
-    var userId = $(this).data("id");
-    var obj = { user_id: userId };
-    var myJSON = JSON.stringify(obj);
-    
-    $.ajax({
-      url: "http://api.test/api-delete.php",
-      type: "POST",
-      data: myJSON,
-      success: function(data) {
-        if(data.status == false) {
-          $('#error-message').html(data.message).slideDown();
-          $('#success-message').slideUp();
+                        $.ajax({
+                            url: "http://api.test/api-insert.php",
+                            type: "POST",
+                            contentType: "application/json", // Specify that we are sending JSON
+                            data: myJSON,
+                            success: function (data) {
+                                if (data.status === false) {
+                                    $("#error-message").html(data.message).slideDown();
+                                    $("#success-message").slideUp();
 
-          setTimeout(function() {
-            $('#error-message').slideUp();
-          }, 3000); // Hide error message after 3 seconds
+                                    setTimeout(function () {
+                                        $("#error-message").slideUp();
+                                    }, 3000); // Hide error message after 3 seconds
+                                } else {
+                                    $("#success-message").html(data.message).slideDown();
+                                    $("#error-message").slideUp();
+                                    $("#add-form").trigger("reset");
+                                    $("#load-table").empty();
+                                    loadTable();
 
-        } else {
-          $('#success-message').html(data.message).slideDown();
-          $('#error-message').slideUp();
-          $('#load-table').empty();
-          loadTable();
+                                    // Hide success message after 3 seconds
+                                    setTimeout(function () {
+                                        $("#success-message").slideUp();
+                                    }, 3000);
+                                }
+                            },
+                        });
+                    }
+                });
 
-          setTimeout(function() {
-            $('#success-message').slideUp();
-          }, 3000); // Hide success message after 3 seconds
-        }
-      }
-    });
-  });
+                //Delete Record
 
+                $(document).on("click", ".delete-btn", function () {
+                    var userId = $(this).data("id");
+                    var obj = { user_id: userId };
+                    var myJSON = JSON.stringify(obj);
 
+                    $.ajax({
+                        url: "http://api.test/api-delete.php",
+                        type: "POST",
+                        data: myJSON,
+                        success: function (data) {
+                            if (data.status == false) {
+                                $("#error-message").html(data.message).slideDown();
+                                $("#success-message").slideUp();
 
-  //Fetch Single Record : Show in Modal Box
+                                setTimeout(function () {
+                                    $("#error-message").slideUp();
+                                }, 3000); // Hide error message after 3 seconds
+                            } else {
+                                $("#success-message").html(data.message).slideDown();
+                                $("#error-message").slideUp();
+                                $("#load-table").empty();
+                                loadTable();
 
-  $(document).on("click", ".edit-btn", function() {
-    $('#modal').show();
+                                setTimeout(function () {
+                                    $("#success-message").slideUp();
+                                }, 3000); // Hide success message after 3 seconds
+                            }
+                        },
+                    });
+                });
 
-    var userId = $(this).data("eid");
-    var obj = { user_id: userId };
-    var myJSON = JSON.stringify(obj);
-    
-            console.log(myJSON);
-        
-    $.ajax({
-      url: "http://api.test/api-fetch-single.php",
-      type: "POST",
-      data: myJSON,
-      success: function(data) {
+                //Fetch Single Record : Show in Modal Box
 
-        $('#edit-id').val(data[0].id);
-        $('#edit-name').val(data[0].full_name);
-        $('#edit-email').val(data[0].email);
-        $('#edit-address').val(data[0].address);
-        $('#edit-phone').val(data[0].phone);
-        $('#edit-password').val(data[0].password);
-      }
+                $(document).on("click", ".edit-btn", function () {
+                    $("#modal").show();
 
+                    var userId = $(this).data("eid");
+                    var obj = { user_id: userId };
+                    var myJSON = JSON.stringify(obj);
 
-    });
+                    console.log(myJSON);
 
+                    $.ajax({
+                        url: "http://api.test/api-fetch-single.php",
+                        type: "POST",
+                        data: myJSON,
+                        success: function (data) {
+                            $("#edit-id").val(data[0].id);
+                            $("#edit-name").val(data[0].full_name);
+                            $("#edit-email").val(data[0].email);
+                            $("#edit-address").val(data[0].address);
+                            $("#edit-phone").val(data[0].phone);
+                            $("#edit-password").val(data[0].password);
+                        },
+                    });
+                });
 
-  });
+                //add new record
+                $("#add-btn").on("click", function () {
+                    $("#add-record-modal").show();
+                });
 
-  //add new record
-  $('#add-btn').on("click", function() {
-    $('#add-record-modal').show();
+                $("#add-record-close-btn").on("click", function () {
+                    $("#add-record-modal").hide();
+                });
 
+                //Hide Modal Box
 
+                $("#close-btn").on("click", function () {
+                    $("#modal").hide();
+                });
 
+                // Update Record
+                // Update Record
+                $("#edit-submit").on("click", function () {
+                    var id = $("#edit-id").val();
+                    var name = $("#edit-name").val();
+                    var email = $("#edit-email").val();
+                    var address = $("#edit-address").val();
+                    var phone = $("#edit-phone").val();
+                    var password = $("#edit-password").val();
 
+                    // Validate form fields
+                    if (name === "" || email === "" || address === "" || phone === "" || password === "") {
+                        $("#error-message").html("All fields are required.").slideDown();
+                        $("#success-message").slideUp();
+                        setTimeout(function () {
+                            $("#error-message").slideUp();
+                        }, 3000); // Hide after 3 seconds
+                        return;
+                    }
 
-  });
+                    $("#error-message").slideUp();
 
-  $('#add-record-close-btn').on("click", function() {
-    $('#add-record-modal').hide();
-  });
+                    var obj = {
+                        user_id: id,
+                        full_name: name,
+                        email: email,
+                        address: address,
+                        phone: phone,
+                        password: password,
+                    };
 
+                    var myJSON = JSON.stringify(obj);
 
+                    $.ajax({
+                        url: "http://api.test/api-update.php",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: myJSON,
+                        success: function (data) {
+                            if (data.status === false) {
+                                $("#error-message").html(data.message).slideDown();
+                                $("#success-message").slideUp();
+                                setTimeout(function () {
+                                    $("#error-message").slideUp();
+                                }, 3000); // Hide after 3 seconds
+                            } else {
+                                $("#success-message").html(data.message).slideDown();
+                                $("#error-message").slideUp();
+                                setTimeout(function () {
+                                    $("#success-message").slideUp();
+                                }, 3000); // Hide after 3 seconds
 
-  //Hide Modal Box
-  
-  $('#close-btn').on("click", function() {
-    $('#modal').hide();
-  });
+                                $("#edit-form").trigger("reset");
+                                $("#modal").hide();
+                                $("#load-table").empty();
+                                loadTable(); // Reload the table with updated data
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            $("#error-message")
+                                .html("An error occurred: " + error)
+                                .slideDown();
+                            setTimeout(function () {
+                                $("#error-message").slideUp();
+                            }, 3000); // Hide after 3 seconds
+                        },
+                    });
+                });
 
-// Update Record
-// Update Record
-$('#edit-submit').on("click", function() {
-    var id = $('#edit-id').val();
-    var name = $('#edit-name').val();
-    var email = $('#edit-email').val();
-    var address = $('#edit-address').val();
-    var phone = $('#edit-phone').val();
-    var password = $('#edit-password').val();
+                //Live Search Record
 
-    // Validate form fields
-    if (name === "" || email === "" || address === "" || phone === "" || password === "") {
-        $('#error-message').html("All fields are required.").slideDown();
-        $('#success-message').slideUp();
-        setTimeout(function() {
-            $('#error-message').slideUp();
-        }, 3000); // Hide after 3 seconds
-        return;
-    }
+                $(document).on("click", "#search-btn", function () {
+                    var search = $("#search").val();
+                    if (search == "") {
+                        $("#error-message").html("Search field required.").slideDown();
+                        $("#success-message").slideUp();
 
-    $('#error-message').slideUp();
+                        setTimeout(function () {
+                            $("#error-message").slideUp();
+                        }, 3000); // Hide error message after 3 seconds
+                    } else {
+                        $("#error-message").slideUp();
+                        var obj = { search: search };
+                        var myJSON = JSON.stringify(obj);
 
-    var obj = {
-        user_id: id,
-        full_name: name,
-        email: email,
-        address: address,
-        phone: phone,
-        password: password
-    };
-    
-    var myJSON = JSON.stringify(obj);
+                        $.ajax({
+                            url: "http://api.test/api-search.php",
+                            type: "POST",
+                            data: myJSON,
+                            success: function (data) {
+                                if (data.status == false) {
+                                    $("#error-message").html(data.message).slideDown();
+                                    $("#success-message").slideUp();
+                                    $("#load-table").empty();
 
-    $.ajax({
-        url: "http://api.test/api-update.php",
-        type: "POST",
-        contentType: "application/json",
-        data: myJSON,
-        success: function(data) {
-            if (data.status === false) {
-                $('#error-message').html(data.message).slideDown();
-                $('#success-message').slideUp();
-                setTimeout(function() {
-                    $('#error-message').slideUp();
-                }, 3000); // Hide after 3 seconds
-            } else {
-                $('#success-message').html(data.message).slideDown();
-                $('#error-message').slideUp();
-                setTimeout(function() {
-                    $('#success-message').slideUp();
-                }, 3000); // Hide after 3 seconds
+                                    setTimeout(function () {
+                                        $("#error-message").slideUp();
+                                    }, 3000); // Hide error message after 3 seconds
+                                } else {
+                                    $("#success-message").html(data.message).slideDown();
+                                    $("#error-message").slideUp();
 
-                $('#edit-form').trigger("reset");
-                $('#modal').hide();
-                $('#load-table').empty();
-                loadTable(); // Reload the table with updated data
-            }
-        },
-        error: function(xhr, status, error) {
-            $('#error-message').html("An error occurred: " + error).slideDown();
-            setTimeout(function() {
-                $('#error-message').slideUp();
-            }, 3000); // Hide after 3 seconds
-        }
-    });
-});
-
-
-
-
-
-
-  //Live Search Record
-
-  $(document).on("click", "#search-btn", function() {
-    var search = $('#search').val();
-    if(search == "") {
-      $('#error-message').html("Search field required.").slideDown();
-      $('#success-message').slideUp();
-
-      setTimeout(function() {
-        $('#error-message').slideUp();
-      }, 3000); // Hide error message after 3 seconds
-    } else {
-      $('#error-message').slideUp();
-      var obj = { search: search };
-      var myJSON = JSON.stringify(obj);
-      
-      $.ajax({
-        url: "http://api.test/api-search.php",
-        type: "POST",
-        data: myJSON,
-        success: function(data) {
-          if(data.status == false) {
-            $('#error-message').html(data.message).slideDown();
-            $('#success-message').slideUp();
-            $('#load-table').empty();
-
-            setTimeout(function() {
-              $('#error-message').slideUp();
-            }, 3000); // Hide error message after 3 seconds
-          } else {
-            $('#success-message').html(data.message).slideDown();
-            $('#error-message').slideUp();
-
-            setTimeout(function() {
-              $('#success-message').slideUp();
-            }, 3000); // Hide success message after 3 seconds
-            $('#load-table').empty();
-            $.each(data, function(i, item) {
-              $('#load-table').append('<tr><td class="center">'
-                +data[i].id+'</td><td>'+data[i].full_name+
-                  '</td><td>'+data[i].email+'</td><td>'+data[i].address+'</td><td>'+data[i].phone+'</td><td>'+data[i].password+
-
-                    '</td><td class="center"><button class="edit-btn" data-eid="'
-                      +data[i].id+'">Edit</button></td><td class="center"><button class="delete-btn" data-id="'
-                        +data[i].id+'">Delete</button></td></tr>');
+                                    setTimeout(function () {
+                                        $("#success-message").slideUp();
+                                    }, 3000); // Hide success message after 3 seconds
+                                    $("#load-table").empty();
+                                    $.each(data, function (i, item) {
+                                        $("#load-table").append(
+                                            '<tr><td class="center">' +
+                                                data[i].id +
+                                                "</td><td>" +
+                                                data[i].full_name +
+                                                "</td><td>" +
+                                                data[i].email +
+                                                "</td><td>" +
+                                                data[i].address +
+                                                "</td><td>" +
+                                                data[i].phone +
+                                                "</td><td>" +
+                                                data[i].password +
+                                                '</td><td class="center"><button class="edit-btn" data-eid="' +
+                                                data[i].id +
+                                                '">Edit</button></td><td class="center"><button class="delete-btn" data-id="' +
+                                                data[i].id +
+                                                '">Delete</button></td></tr>'
+                                        );
+                                    });
+                                }
+                            },
+                        });
+                    }
+                });
             });
-          }
-        }
-      });
-    }});
-
-
-  });
-
-
-</script>
-</body>
+        </script>
+    </body>
 </html>
